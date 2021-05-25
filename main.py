@@ -45,7 +45,6 @@ class Bird:
 class Obstacle:
 
     def __init__(self,surface):
-        # we can use same principle like while building the snake
         self.surface = surface
         self.obstacle_down = pygame.image.load("C:/Users/hamro/Desktop/pygame_snake/floppy_bird/resources/obstacle.png")
         self.obstacle_up = pygame.image.load("C:/Users/hamro/Desktop/pygame_snake/floppy_bird/resources/obstacle_up.png")
@@ -174,7 +173,8 @@ class Game:
                     # press escape to quit the game
                     if event.key == K_ESCAPE:
                         run = False
-                    # to reset the cycle - if its pause we cannt loop
+                    # to reset the cycle
+                    # if pause is True we cannot loop through
                     if event.key == K_RETURN:
                         pause = False
                         self.reset()
