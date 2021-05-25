@@ -54,7 +54,7 @@ class Obstacle:
         self.obstacle_y_down = -300
         self.render_obstacles()
         self.speed = 10
-        self.score = 1
+        self.score = 0
 
 
     def render_obstacles(self):
@@ -77,6 +77,8 @@ class Obstacle:
             # it points up 200 is length of the top obstacle and 60 will be always the gap
             self.obstacle_y_up = self.obstacle_y_down + 500 + 100
             self.score += 1
+            sound = pygame.mixer.Sound("C:/Users/hamro/Desktop/pygame_snake/floppy_bird/resources/Ding-sound-effect_.mp3")
+            pygame.mixer.Sound.play(sound)
 
 class Game:
 
@@ -88,6 +90,7 @@ class Game:
         self.bird = Bird(self.surface)
         self.bird.draw_bird()
         self.obstacles = Obstacle(self.surface)
+        pygame.mixer.init()
 
 
     def render_background(self):
@@ -108,12 +111,7 @@ class Game:
         score = font.render(f"Score: {self.obstacles.score}", True, (255, 255, 0))
         # always to display sth use blit
         self.surface.blit(score,(400,20))
-        print(self.obstacles.score)
-        # todo have a look at it we have to implement more conditions
-        if self.obstacles.score % 5 != 0:
-            pass
-        else:
-            self.obstacles.speed += 10
+
 
     def game_over(self):
         # first create surface because whatever i have i want to wipe out
@@ -126,23 +124,18 @@ class Game:
         font_2 = pygame.font.SysFont("arial", 17)
         score = font_2.render(f"your score was: {self.obstacles.score}", True, (255, 255, 255))
         self.surface.blit(score, (390, 160))
-
         font_3 = pygame.font.SysFont("arial", 17)
         score = font_3.render("if you want to return press enter", True, (255, 255, 255))
         self.surface.blit(score, (345, 185))
         pygame.display.flip()
+        sound_crush = pygame.mixer.Sound("C:/Users/hamro/Desktop/pygame_snake/floppy_bird/resources/crush.mp3")
+        pygame.mixer.Sound.play(sound_crush)
 
     def reset(self):
         self.obstacles.score = 0
         self.obstacles.x_position = OBSTACLE_DEFAULT_X
 
-    '''
-    def speed_up(self):
-        if self.score % 5 == 0:
-            return True
-        else:
-            return False
-    '''
+
 
     def play(self):
         self.render_background()
@@ -152,7 +145,6 @@ class Game:
         self.obstacles.render_obstacles()
         self.obstacles.move_obstacles()
         self.display_score()
-        print(self.obstacles.speed)
         pygame.display.flip()
 
 
@@ -202,6 +194,9 @@ class Game:
             except Exception as e:
                 self.game_over()
                 pause = True
+
+
+
 
 
 
